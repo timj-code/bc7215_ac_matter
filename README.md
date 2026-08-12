@@ -5,7 +5,7 @@
 - Connect virtually any air conditioner—old or new, directly to Apple Home, Google Home, or Home Assistant
 - No app installation required
 - No account registration required
-- No touching the air conditioner's internal circuit required
+- No touching of the air conditioner's internal circuit required
 
 ![](img/use-illustration_1280px.jpg)
 
@@ -60,7 +60,7 @@ Online installation is currently provided only for ESP32-C3 modules. However, th
 
 ![](img/supermini-bc7215module-wiring.jpg)
 
-#### 3D-Printed Enclosure
+![](img/minipro-bc7215module-wiring.jpg)
 
 A STEP file for a 3D-printable enclosure is provided. If you have a 3D printer, you can print the enclosure to make the device look more like a finished product. [See the enclosure documentation here](docs/casing.md).
 
@@ -136,7 +136,7 @@ There are two openings on the rear cover of the device: one for the button and o
 
 1. **Pairing with the air conditioner**  After the device is powered on for the first time, the LED should remain steadily lit, indicating that the device has not yet been configured. First, set the air conditioner's infrared remote control to 25°C in Cooling mode. Press the button on the device once. The LED will begin flashing rapidly, indicating that pairing mode is active. Point the air conditioner remote control at the device and press the **Fan Speed** button. Under normal conditions, pairing will then be completed. The LED will change to two short flashes per second, indicating that connection to the phone has not yet been configured.
 
-2. **Connecting to a phone**  Since ESP32 only supports 2.4GHz, it's better to connect your phone to 2.4G Wifi too to prevent potential problems. Open the Apple Home or Google Home app. In Apple Home, select **Add Accessory**. In Google Home, select the option to add a device. A QR-code scanning screen will appear. Scan the Matter commissioning QR code. *(When I'm going to give it to my friends, I will print this QR code and attach it to the enclosure so that the connection setup will be easy. I will also attach another QR code linking to this page as a user manual.)* Follow the on-screen instructions to complete the setup. During the connection process, including reconnection after the device has been powered off, the LED will flash slowly to indicate that a connection is being in negotiation. 
+2. **Connecting to a phone**  Since ESP32 only supports 2.4GHz, it's better to **connect your phone to 2.4G Wifi** too to prevent potential problems. Open the Apple Home or Google Home app. In Apple Home, select Add Accessory. In Google Home, select the option to add a device. A QR-code scanning screen will appear. Scan the Matter commissioning QR code. *(When I'm going to give it to my friends, I will print this QR code and attach it to the enclosure so that the connection setup will be easy. I will also attach another QR code linking to this page as a user manual.)* Follow the on-screen instructions to complete the setup. During the connection process, including reconnection after the device has been powered off, the LED will flash slowly to indicate that a connection is being in negotiation. 
    
    Matter commissioning QR code:
    
@@ -144,7 +144,7 @@ There are two openings on the rear cover of the device: one for the button and o
    
    QR code linking to the user manual (this document):
    
-   ![](img/manual_QR.png)
+   ![](img/manual_QR_en.jpg)
 
 Connecting a Matter device is usually relatively slow and often takes tens of seconds. Even after the device has completed the connection process, the phone may take a while to show the device as online. This appears to be caused by the design of the smart-home platform, and there seems to be little that a device developer can do about it.
 
@@ -155,6 +155,25 @@ After the connection is successful, the LED will change to one short flash every
 After the device has been successfully added to the phone, interfaces for the thermostat and fan controller should appear. Because of the limitations described above, only Cooling and Heating modes are currently supported. If the temperature is set to a value ending in 0.5°C, it will be rounded up because the device does not support 0.5°C settings. Similarly, if fan speed is displayed as a continuously adjustable percentage, it will be mapped to the nearest of the three supported levels: High, Medium, or Low.
 
 In addition to controlling the air conditioner from a phone, the device can synchronize commands sent from the infrared remote control back to the phone. This allows the user to see remote-control operations reflected on the phone. The device should therefore be placed near the air conditioner so that it can also receive the infrared signal whenever the user operates the air conditioner with the remote control. Otherwise, those operations cannot be synchronized.
+
+#### Device Placement
+
+This device has two main functions:
+
+- Sending infrared signals to the air conditioner
+- Receiving signals from the infrared remote control, decoding them, and synchronising the operations  the smart home system
+
+The infrared transmission function is straightforward. The infrared transmitting LED needs to point toward the air conditioner. The module provides sufficient transmission power, with an operating range similar to that of a standard infrared remote control.
+
+The infrared reception function determines whether the smart home system can “see” the operations performed using the infrared remote control. Therefore, when you use the remote control, this device must also be able to receive its infrared signals.
+
+Because an infrared remote control is normally pointed toward the air conditioner, this device should also be placed near the air conditioner, with its infrared receiver generally facing the person using the remote control. This allows the device to receive the remote control signals at the same time.
+
+Therefore, there are three key points to consider when positioning the device:
+
+1. Place the device near the air conditioner.
+2. Point the infrared transmitting LED toward the air conditioner.
+3. Point the infrared receiver toward the person using the remote control.
 
 #### Adding Another Controller
 

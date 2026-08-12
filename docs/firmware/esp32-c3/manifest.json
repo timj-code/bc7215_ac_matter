@@ -1,6 +1,6 @@
 {
   "name": "BC7215 Matter AC Controller - ESP32-C3 XIAO / Super Mini",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "home_assistant_domain": "esphome",
   "new_install_prompt_erase": true,
   "builds": [
